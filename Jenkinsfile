@@ -2,8 +2,8 @@ pipeline {
   agent any
   environment{
     DOCKERHUB_CREDENCIALS = credentials ('dockerhub')
-    RepoDockerHub = 'lferraro11'
-    NameContainer = 'docker-flask'
+    RepoDockerHub = 'ferraroluc'
+    NameContainer = 'flask-hello-world'
   }
   stages {
     stage('Build'){
