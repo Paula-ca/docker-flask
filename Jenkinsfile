@@ -1,7 +1,7 @@
 pipeline {
   agent any
   environment{
-    DOCKERHUB_CREDENCIALS = credentials ('dockerhub')
+    DOCKERHUB_CREDENTIALS = credentials ('dockerhub')
     RepoDockerHub = 'ferraroluc'
     NameContainer = 'flask-hello-world'
   }
@@ -13,7 +13,7 @@ pipeline {
     }
     stage('Login to Dockerhub'){
       steps{
-        sh "echo $DOCKERHUB_CREDENCIALS_PSW | docker login -u $DOCKERHUB_CREDENCIALS_USR --password-stdin"
+        sh "echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin"
       }
     }
     stage('Push image to Dockerhub'){
