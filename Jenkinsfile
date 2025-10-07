@@ -2,7 +2,7 @@ pipeline {
   agent any
   environment {
     DOCKERHUB_CREDENTIALS = credentials('dockerhub')
-    RepoDockerHub = 'paula-ca'  // <-- cambiá esto a tu usuario real de DockerHub
+    RepoDockerHub = 'paula-ca' 
     NameContainer = 'flask-hello-world'
   }
   stages {
@@ -12,10 +12,14 @@ pipeline {
       }
     }
     stage('Login to Dockerhub') {
-      steps {
-        sh "echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin"
-      }
+  steps {
+    withCredentials([usernamePassword(credentialsId: 'dockerhub', passwordVariable: 'DOCKER_PASSWORD', usernameVariable: 'DOCKER_USERNAME')]) {
+      sh '''
+        echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+      '''
     }
+  }
+}
     stage('Push image to Dockerhub') {
       steps {
         sh "docker push ${env.RepoDockerHub}/${env.NameContainer}:${env.BUILD_NUMBER}"
